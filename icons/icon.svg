@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0f0a"/>
+      <stop offset="100%" style="stop-color:#000000"/>
+    </linearGradient>
+    <linearGradient id="glowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00ff88"/>
+      <stop offset="100%" style="stop-color:#00cc6a"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="128" height="128" rx="20" fill="url(#bgGrad)"/>
+
+  <!-- Border glow -->
+  <rect x="4" y="4" width="120" height="120" rx="16" fill="none" stroke="#00ff88" stroke-width="2" opacity="0.6"/>
+
+  <!-- Terminal prompt -->
+  <g filter="url(#glow)">
+    <!-- > symbol -->
+    <path d="M24 45 L44 64 L24 83" stroke="#00ff88" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+    <!-- Cursor underscore -->
+    <rect x="52" y="80" width="20" height="5" fill="#00ff88"/>
+
+    <!-- TH text -->
+    <text x="88" y="72" font-family="monospace" font-weight="900" font-size="36" fill="#ffffff" text-anchor="middle">TH</text>
+  </g>
+
+  <!-- Subtle scan lines -->
+  <g opacity="0.1">
+    <line x1="0" y1="32" x2="128" y2="32" stroke="#00ff88" stroke-width="1"/>
+    <line x1="0" y1="64" x2="128" y2="64" stroke="#00ff88" stroke-width="1"/>
+    <line x1="0" y1="96" x2="128" y2="96" stroke="#00ff88" stroke-width="1"/>
+  </g>
+</svg>

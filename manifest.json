@@ -1,0 +1,67 @@
+{
+  "manifest_version": 3,
+  "name": "TryHarder Security Suite",
+  "version": "1.0.0",
+  "description": "15-in-1 Security Testing Toolkit - SubRecon, ParamFuzz, JSHunter, SQLiDetect & more | Built by a0x194",
+  "author": "a0x194 (https://github.com/a0x194)",
+  "homepage_url": "https://www.tryharder.space",
+
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    },
+    "default_title": "TryHarder Security Suite"
+  },
+
+  "permissions": [
+    "activeTab",
+    "storage",
+    "scripting",
+    "webRequest",
+    "contextMenus",
+    "clipboardWrite",
+    "tabs"
+  ],
+
+  "host_permissions": [
+    "<all_urls>"
+  ],
+
+  "background": {
+    "service_worker": "js/background.js",
+    "type": "module"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["js/content.js"],
+      "run_at": "document_end"
+    }
+  ],
+
+  "web_accessible_resources": [
+    {
+      "resources": ["js/*", "css/*", "icons/*"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "security-suite@tryharder.space",
+      "strict_min_version": "109.0"
+    }
+  }
+}

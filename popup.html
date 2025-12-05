@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=720, height=580">
+  <title>TryHarder Security Suite</title>
+  <link rel="stylesheet" href="css/popup.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">
+        <svg width="28" height="28" viewBox="0 0 100 100" fill="none">
+          <path d="M15 35 L35 50 L15 65" stroke="#00ff88" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="38" y="75" width="15" height="6" fill="#00ff88"/>
+          <text x="68" y="62" font-family="monospace" font-weight="900" font-size="36" fill="#fff" text-anchor="middle">TH</text>
+        </svg>
+        <div class="logo-info">
+          <span class="logo-text">TryHarder Security Suite</span>
+          <span class="logo-author">by <a href="https://github.com/a0x194" target="_blank">a0x194</a></span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button id="settingsBtn" class="icon-btn" title="Settings">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+        </button>
+        <button id="exportBtn" class="icon-btn" title="Export All Results">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+        </button>
+        <a href="https://www.tryharder.space" target="_blank" class="icon-btn" title="TryHarder Platform">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+          </svg>
+        </a>
+      </div>
+    </header>
+
+    <!-- Current Target Info -->
+    <div class="target-info">
+      <div class="target-url" id="targetUrl">-</div>
+      <div class="target-status">
+        <span class="status-dot" id="statusDot"></span>
+        <span id="statusText">Ready</span>
+      </div>
+    </div>
+
+    <!-- Main Layout -->
+    <div class="main-layout">
+      <!-- Sidebar Navigation -->
+      <nav class="sidebar">
+        <div class="nav-section">
+          <div class="nav-section-title">Tier 1 - Essential</div>
+          <button class="nav-item active" data-tool="jshunter">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+            </svg>
+            <span>JSHunter</span>
+          </button>
+          <button class="nav-item" data-tool="paramfuzz">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.3-4.3"></path>
+            </svg>
+            <span>ParamFuzz</span>
+          </button>
+          <button class="nav-item" data-tool="subrecon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="14" y="14" width="7" height="7"></rect>
+              <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+            <span>SubRecon</span>
+          </button>
+          <button class="nav-item" data-tool="sqlidetect">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+              <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+              <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+            </svg>
+            <span>SQLiDetect</span>
+          </button>
+          <button class="nav-item" data-tool="authbypass">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
+            </svg>
+            <span>AuthBypass</span>
+          </button>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Tier 2 - Advanced</div>
+          <button class="nav-item" data-tool="wayback">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <span>WaybackMiner</span>
+          </button>
+          <button class="nav-item" data-tool="headeraudit">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+            <span>HeaderAudit</span>
+          </button>
+          <button class="nav-item" data-tool="apirecon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            <span>APIRecon</span>
+          </button>
+          <button class="nav-item" data-tool="portrush">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+              <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+              <line x1="6" y1="6" x2="6.01" y2="6"></line>
+              <line x1="6" y1="18" x2="6.01" y2="18"></line>
+            </svg>
+            <span>PortRush</span>
+          </button>
+          <button class="nav-item" data-tool="gitleaks">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+            </svg>
+            <span>GitLeaks</span>
+          </button>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Tier 3 - Expert</div>
+          <button class="nav-item" data-tool="certwatch">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+              <line x1="12" y1="22.08" x2="12" y2="12"></line>
+            </svg>
+            <span>CertWatch</span>
+          </button>
+          <button class="nav-item" data-tool="dnstracer">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="2" y1="12" x2="22" y2="12"></line>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+            </svg>
+            <span>DNSTracer</span>
+          </button>
+          <button class="nav-item" data-tool="webtechfp">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="16 18 22 12 16 6"></polyline>
+              <polyline points="8 6 2 12 8 18"></polyline>
+            </svg>
+            <span>WebTechFP</span>
+          </button>
+          <button class="nav-item" data-tool="cachepoison">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+              <line x1="12" y1="9" x2="12" y2="13"></line>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+            <span>CachePoison</span>
+          </button>
+          <button class="nav-item" data-tool="protodetect">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12.55a11 11 0 0 1 14.08 0"></path>
+              <path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
+              <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+              <line x1="12" y1="20" x2="12.01" y2="20"></line>
+            </svg>
+            <span>ProtoDetect</span>
+          </button>
+        </div>
+      </nav>
+
+      <!-- Tool Panels -->
+      <main class="tool-panels">
+        <!-- JSHunter Panel -->
+        <div class="tool-panel active" id="panel-jshunter">
+          <div class="panel-header">
+            <div class="panel-title">
+              <h3>JSHunter</h3>
+              <span class="panel-desc">Extract endpoints, secrets & sensitive data from JavaScript</span>
+            </div>
+            <button class="btn btn-primary" id="jsHunterScan">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+              Scan Page
+            </button>
+          </div>
+
+          <div class="options-row">
+            <label class="checkbox"><input type="checkbox" id="jsExtractEndpoints" checked><span>API Endpoints</span></label>
+            <label class="checkbox"><input type="checkbox" id="jsExtractSecrets" checked><span>Secrets/Keys</span></label>
+            <label class="checkbox"><input type="checkbox" id="jsExtractDomains" checked><span>Domains</span></label>
+            <label class="checkbox"><input type="checkbox" id="jsExtractPaths" checked><span>Paths</span></label>
+            <label class="checkbox"><input type="checkbox" id="jsDeepScan"><span>Deep Scan (External JS)</span></label>
+          </div>
+
+          <div class="results-container" id="jsResults">
+            <div class="empty-state">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+              </svg>
+              <p>Click "Scan Page" to analyze JavaScript files</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ParamFuzz Panel -->
+        <div class="tool-panel" id="panel-paramfuzz">
+          <div class="panel-header">
+            <div class="panel-title">
+              <h3>ParamFuzz</h3>
+              <span class="panel-desc">Discover hidden parameters and query strings</span>
+            </div>
+            <button class="btn btn-primary" id="paramFuzzScan">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+              Start Fuzz
+            </button>
+          </div>
+
+          <div class="input-row">
+            <div class="input-group flex-1">
+              <label>Target URL</label>
+              <input type="text" id="paramTargetUrl" placeholder="https://example.com/api/endpoint">
+            </div>
+            <div class="input-group">
+              <label>Method</label>
+              <select id="paramMethod">
+                <option value="GET">GET</option>
+                <option value="POST">POST</option>
+                <option value="PUT">PUT</option>
+                <option value="DELETE">DELETE</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="options-row">
+            <label class="checkbox"><input type="checkbox" id="paramCommon" checked><span>Common</span></label>
+            <label class="checkbox"><input type="checkbox" id="paramAdmin" checked><span>Admin</span></label>
+            <label class="checkbox"><input type="checkbox" id="paramDebug"><span>Debug</span></label>
+            <label class="checkbox"><input type="checkbox" id="paramApi"><span>API</span></label>
+          </div>
+
+          <div class="input-group">
+            <label>Custom Params (one per line)</label>
+            <textarea id="paramCustomList" rows="2" placeholder="custom_param&#10;secret_key"></textarea>
+          </div>
+
+          <div class="progress-bar" id="paramProgress" style="display: none;">
+            <div class="progress-fill" id="paramProgressFill"></div>
+            <span class="progress-text" id="paramProgressText">0%</span>
+          </div>
+
+          <div class="results-container" id="paramResults">
+            <div class="empty-state">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.3-4.3"></path>
+              </svg>
+              <p>Configure and start parameter fuzzing</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- SubRecon Panel -->
+        <div class="tool-panel" id="panel-subrecon">
+          <div class="panel-header">
+            <div class="panel-title">
+              <h3>SubRecon</h3>
+              <span class="panel-desc">Subdomain enumeration and alive checking</span>
+            </div>
+            <button class="btn btn-primary" id="subReconScan">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+              Enumerate
+            </button>
+          </div>
+
+          <div class="input-group">
+            <label>Target Domain</label>
+            <input type="text" id="subDomain" placeholder="example.com">
+          </div>
+
+          <div class="options-row">
+            <label class="checkbox"><input type="checkbox" id="subCrtSh" checked><span>crt.sh</span></label>
+            <label class="checkbox"><input type="checkbox" id="subWordlist" checked><span>Wordlist</span></label>
+            <label class="checkbox"><input type="checkbox" id="subAliveCheck" checked><span>Alive Check</span></label>
+            <label class="checkbox"><input type="checkbox" id="subTakeover"><span>Takeover Check</span></label>
+          </div>
+
+          <div class="progress-bar" id="subProgress" style="display: none;">
+            <div class="progress-fill" id="subProgressFill"></div>
+            <span class="progress-text" id="subProgressText">0%</span>
+          </div>
+
+          <div class="results-container" id="subResults">
+            <div class="empty-state">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+              </svg>
+              <p>Enter domain and start subdomain enumeration</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- SQLiDetect Panel -->
+        <div class="tool-panel" id="panel-sqlidetect">
+          <div class="panel-header">
+            <div class="panel-title">
+              <h3>SQLiDetect</h3>
+              <span class="panel-desc">Lightweight SQL injection detection</span>
+            </div>
+            <button class="btn btn-primary" id="sqliScan">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+              Test SQLi
+            </button>
+          </div>
+
+          <div class="input-group">
+            <label>Target URL (with params)</label>
+            <input type="text" id="sqliUrl" placeholder="https://example.com/search?q=test&id=1">
+          </div>
+
+          <div class="options-row">
+            <label class="checkbox"><input type="checkbox" id="sqliErrorBased" checked><span>Error-Based</span></label>
+            <label class="checkbox"><input type="checkbox" id="sqliTimeBased"><span>Time-Based</span></label>
+            <label class="checkbox"><input type="checkbox" id="sqliBoolBased" checked><span>Boolean-Based</span></label>
+            <label class="checkbox"><input type="checkbox" id="sqliUnion"><span>UNION-Based</span></label>
+          </div>
+
+          <div class="results-container" id="sqliResults">
+            <div class="empty-state">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+              </svg>
+              <p>Enter URL with parameters to test for SQL injection</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- AuthBypass Panel -->
+        <div class="tool-panel" id="panel-authbypass">
+          <div class="panel-header">
+            <div class="panel-title">
+              <h3>AuthBypass</h3>
+              <span class="panel-desc">IDOR, privilege escalation & auth bypass testing</span>
+            </div>
+            <button class="btn btn-primary" id="authBypassScan">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+              Test Auth
+            </button>
+          </div>
+
+          <div class="input-group">
+            <label>Endpoint to Test</label>
+            <input type="text" id="authTargetUrl" placeholder="https://example.com/api/user/123/profile">
+          </div>
+
+          <div class="input-row">
+            <div class="input-group flex-1">
+              <label>Token A (High Priv)</label>
+              <input type="text" id="authTokenA" placeholder="Bearer eyJhbG...">
+            </div>
+            <div class="input-group flex-1">
+              <label>Token B (Low Priv)</label>
+              <input type="text" id="authTokenB" placeholder="Bearer eyJhbG... or empty">
+            </div>
+          </div>
+
+          <div class="options-row">
+            <label class="checkbox"><input type="checkbox" id="authIdorTest" checked><span>IDOR</span></label>
+            <label class="checkbox"><input type="checkbox" id="authMethodTest" checked><span>Method Override</span></label>
+            <label class="checkbox"><input type="checkbox" id="authHeaderTest" checked><span>Header Bypass</span></label>
+            <label class="checkbox"><input type="checkbox" id="authPathTest"><span>Path Traversal</span></label>
+          </div>
+
+          <div class="input-group">
+            <label>IDs to Test (comma separated)</label>
+            <input type="text" id="authIdValues" placeholder="1, 2, 999, admin, me">
+          </div>
+
+          <div class="results-container" id="authResults">
+            <div class="empty-state">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+              <p>Configure tokens and start authorization testing</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- WaybackMiner Panel -->
+        <div class="tool-panel" id="panel-wayback">
+          <div class="panel-header">
+            <div class="panel-title">
+              <h3>WaybackMiner</h3>
+              <span class="panel-desc">Mine historical data from Wayback Machine</span>
+            </div>
+            <button class="btn btn-primary" id="waybackScan">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+              Mine History
+            </button>
+          </div>
+
+          <div class="input-group">
+            <label>Target Domain</label>
+            <input type="text" id="waybackDomain" placeholder="example.com">
+          </div>
+
+          <div class="options-row">
+            <label class="checkbox"><input type="checkbox" id="waybackUrls" checked><span>URLs</span></label>
+            <label class="checkbox"><input type="checkbox" id="waybackParams" checked><span>Parameters</span></label>
+            <label class="checkbox"><input type="checkbox" id="waybackFiles" checked><span>Sensitive Files</span></label>
+            <label class="checkbox"><input type="checkbox" id="waybackEndpoints"><span>API Endpoints</span></label>
+          </div>
+
+          <div class="results-container" id="waybackResults">
+            <div class="empty-state">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <p>Enter domain to mine historical data</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- HeaderAudit Panel -->
+        <div class="tool-panel" id="panel-headeraudit">
+          <div class="panel-header">
+            <div class="panel-title">
+              <h3>HeaderAudit</h3>
+              <span class="panel-desc">Security headers analysis and recommendations</span>
+            </div>
+            <button class="btn btn-primary" id="headerAuditScan">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+              Audit Headers
+            </button>
+          </div>
+
+          <div class="input-group">
+            <label>Target URL</label>
+            <input type="text" id="headerUrl" placeholder="https://example.com">
+          </div>
+
+          <div class="results-container" id="headerResults">
+            <div class="empty-state">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              </svg>
+              <p>Enter URL to audit security headers</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- APIRecon Panel -->
+        <div class="tool-panel" id="panel-apirecon">
+          <div class="panel-header">
+            <div class="panel-title">
+              <h3>APIRecon</h3>
+              <span class="panel-desc">API endpoint discovery & documentation detection</span>
+            </div>
+            <button class="btn btn-primary" id="apiReconScan">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+              Discover API
+            </button>
+          </div>
+
+          <div class="input-group">
+            <label>Target URL</label>
+            <input type="text" id="apiUrl" placeholder="https://example.com">
+          </div>
+
+          <div class="options-row">
+            <label class="checkbox"><input type="checkbox" id="apiSwagger" checked><span>Swagger/OpenAPI</span></label>
+            <label class="checkbox"><input type="checkbox" id="apiGraphql" checked><span>GraphQL</span></label>
+            <label class="checkbox"><input type="checkbox" id="apiCommon" checked><span>Common Paths</span></label>
+            <label class="checkbox"><input type="checkbox" id="apiVersions"><span>API Versions</span></label>
+          </div>
+
+          <div class="results-container" id="apiResults">
+            <div class="empty-state">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+              <p>Enter URL to discover API endpoints</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- PortRush Panel -->
+        <div class="tool-panel" id="panel-portrush">
+          <div class="panel-header">
+            <div class="panel-title">
+              <h3>PortRush</h3>
+              <span class="panel-desc">Fast async port scanning (browser-limited)</span>
+            </div>
+            <button class="btn btn-primary" id="portRushScan">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+              Scan Ports
+            </button>
+          </div>
+
+          <div class="input-row">
+            <div class="input-group flex-1">
+              <label>Target Host</label>
+              <input type="text" id="portHost" placeholder="example.com">
+            </div>
+            <div class="input-group">
+              <label>Ports</label>
+              <select id="portPreset">
+                <option value="common">Common (20)</option>
+                <option value="web">Web (HTTP/S)</option>
+                <option value="top100">Top 100</option>
+                <option value="custom">Custom</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="input-group" id="customPortsGroup" style="display:none;">
+            <label>Custom Ports</label>
+            <input type="text" id="customPorts" placeholder="80,443,8080,8443">
+          </div>
+
+          <div class="progress-bar" id="portProgress" style="display: none;">
+            <div class="progress-fill" id="portProgressFill"></div>
+            <span class="progress-text" id="portProgressText">0%</span>
+          </div>
+
+          <div class="results-container" id="portResults">
+            <div class="empty-state">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+                <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+                <line x1="6" y1="6" x2="6.01" y2="6"></line>
+                <line x1="6" y1="18" x2="6.01" y2="18"></line>
+              </svg>
+              <p>Enter host to scan ports</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- GitLeaks Panel -->
+        <div class="tool-panel" id="panel-gitleaks">
+          <div class="panel-header">
+            <div class="panel-title">
+              <h3>GitLeaks</h3>
+              <span class="panel-desc">Find exposed .git folders and sensitive repo data</span>
+            </div>
+            <button class="btn btn-primary" id="gitLeaksScan">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+              Check Git
+            </button>
+          </div>
+
+          <div class="input-group">
+            <label>Target URL</label>
+            <input type="text" id="gitUrl" placeholder="https://example.com">
+          </div>
+
+          <div class="options-row">
+            <label class="checkbox"><input type="checkbox" id="gitFolder" checked><span>.git folder</span></label>
+            <label class="checkbox"><input type="checkbox" id="gitConfig" checked><span>Config files</span></label>
+            <label class="checkbox"><input type="checkbox" id="gitEnv" checked><span>.env files</span></label>
+            <label class="checkbox"><input type="checkbox" id="gitBackup"><span>Backup files</span></label>
+          </div>
+
+          <div class="results-container" id="gitResults">
+            <div class="empty-state">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+              </svg>
+              <p>Enter URL to check for exposed git data</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- CertWatch Panel -->
+        <div class="tool-panel" id="panel-certwatch">
+          <div class="panel-header">
+            <div class="panel-title">
+              <h3>CertWatch</h3>
+              <span class="panel-desc">SSL certificate analysis & subdomain discovery</span>
+            </div>
+            <button class="btn btn-primary" id="certWatchScan">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+              Analyze Cert
+            </button>
+          </div>
+
+          <div class="input-group">
+            <label>Target Domain</label>
+            <input type="text" id="certDomain" placeholder="example.com">
+          </div>
+
+          <div class="options-row">
+            <label class="checkbox"><input type="checkbox" id="certInfo" checked><span>Cert Info</span></label>
+            <label class="checkbox"><input type="checkbox" id="certSan" checked><span>SAN Domains</span></label>
+            <label class="checkbox"><input type="checkbox" id="certCrtsh" checked><span>crt.sh Lookup</span></label>
+            <label class="checkbox"><input type="checkbox" id="certExpiry"><span>Expiry Check</span></label>
+          </div>
+
+          <div class="results-container" id="certResults">
+            <div class="empty-state">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+              </svg>
+              <p>Enter domain to analyze SSL certificates</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- DNSTracer Panel -->
+        <div class="tool-panel" id="panel-dnstracer">
+          <div class="panel-header">
+            <div class="panel-title">
+              <h3>DNSTracer</h3>
+              <span class="panel-desc">Comprehensive DNS record enumeration</span>
+            </div>
+            <button class="btn btn-primary" id="dnsTracerScan">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+              Query DNS
+            </button>
+          </div>
+
+          <div class="input-group">
+            <label>Target Domain</label>
+            <input type="text" id="dnsDomain" placeholder="example.com">
+          </div>
+
+          <div class="options-row">
+            <label class="checkbox"><input type="checkbox" id="dnsA" checked><span>A/AAAA</span></label>
+            <label class="checkbox"><input type="checkbox" id="dnsMx" checked><span>MX</span></label>
+            <label class="checkbox"><input type="checkbox" id="dnsTxt" checked><span>TXT</span></label>
+            <label class="checkbox"><input type="checkbox" id="dnsNs" checked><span>NS</span></label>
+            <label class="checkbox"><input type="checkbox" id="dnsCname"><span>CNAME</span></label>
+          </div>
+
+          <div class="results-container" id="dnsResults">
+            <div class="empty-state">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="2" y1="12" x2="22" y2="12"></line>
+              </svg>
+              <p>Enter domain to enumerate DNS records</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- WebTechFP Panel -->
+        <div class="tool-panel" id="panel-webtechfp">
+          <div class="panel-header">
+            <div class="panel-title">
+              <h3>WebTechFP</h3>
+              <span class="panel-desc">Website technology fingerprinting</span>
+            </div>
+            <button class="btn btn-primary" id="webTechScan">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+              Fingerprint
+            </button>
+          </div>
+
+          <div class="input-group">
+            <label>Target URL</label>
+            <input type="text" id="techUrl" placeholder="https://example.com">
+          </div>
+
+          <div class="options-row">
+            <label class="checkbox"><input type="checkbox" id="techHeaders" checked><span>Headers</span></label>
+            <label class="checkbox"><input type="checkbox" id="techHtml" checked><span>HTML Analysis</span></label>
+            <label class="checkbox"><input type="checkbox" id="techJs" checked><span>JS Libraries</span></label>
+            <label class="checkbox"><input type="checkbox" id="techCookies"><span>Cookies</span></label>
+          </div>
+
+          <div class="results-container" id="techResults">
+            <div class="empty-state">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                <polyline points="16 18 22 12 16 6"></polyline>
+                <polyline points="8 6 2 12 8 18"></polyline>
+              </svg>
+              <p>Enter URL to fingerprint technologies</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- CachePoison Panel -->
+        <div class="tool-panel" id="panel-cachepoison">
+          <div class="panel-header">
+            <div class="panel-title">
+              <h3>CachePoison</h3>
+              <span class="panel-desc">Web cache poisoning vulnerability detection</span>
+            </div>
+            <button class="btn btn-primary" id="cachePoisonScan">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+              Test Cache
+            </button>
+          </div>
+
+          <div class="input-group">
+            <label>Target URL</label>
+            <input type="text" id="cacheUrl" placeholder="https://example.com/static/page">
+          </div>
+
+          <div class="options-row">
+            <label class="checkbox"><input type="checkbox" id="cacheUnkeyed" checked><span>Unkeyed Headers</span></label>
+            <label class="checkbox"><input type="checkbox" id="cacheHost" checked><span>Host Header</span></label>
+            <label class="checkbox"><input type="checkbox" id="cacheXForward"><span>X-Forwarded-*</span></label>
+            <label class="checkbox"><input type="checkbox" id="cacheParam"><span>Param Cloaking</span></label>
+          </div>
+
+          <div class="results-container" id="cacheResults">
+            <div class="empty-state">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+              </svg>
+              <p>Enter URL to test for cache poisoning</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ProtoDetect Panel -->
+        <div class="tool-panel" id="panel-protodetect">
+          <div class="panel-header">
+            <div class="panel-title">
+              <h3>ProtoDetect</h3>
+              <span class="panel-desc">Protocol detection on non-standard ports</span>
+            </div>
+            <button class="btn btn-primary" id="protoDetectScan">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+              Detect Proto
+            </button>
+          </div>
+
+          <div class="input-row">
+            <div class="input-group flex-1">
+              <label>Target Host</label>
+              <input type="text" id="protoHost" placeholder="example.com">
+            </div>
+            <div class="input-group">
+              <label>Port</label>
+              <input type="text" id="protoPort" placeholder="8080" style="width:80px;">
+            </div>
+          </div>
+
+          <div class="options-row">
+            <label class="checkbox"><input type="checkbox" id="protoHttp" checked><span>HTTP/S</span></label>
+            <label class="checkbox"><input type="checkbox" id="protoWs"><span>WebSocket</span></label>
+            <label class="checkbox"><input type="checkbox" id="protoGrpc"><span>gRPC</span></label>
+          </div>
+
+          <div class="results-container" id="protoResults">
+            <div class="empty-state">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                <path d="M5 12.55a11 11 0 0 1 14.08 0"></path>
+                <path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
+                <line x1="12" y1="20" x2="12.01" y2="20"></line>
+              </svg>
+              <p>Enter host and port to detect protocol</p>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Footer Stats -->
+    <footer class="footer">
+      <div class="footer-left">
+        <span class="footer-brand">TryHarder Security Suite v1.0.0</span>
+        <a href="https://github.com/a0x194" target="_blank" class="footer-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+          </svg>
+          a0x194
+        </a>
+      </div>
+      <div class="stats">
+        <div class="stat">
+          <span class="stat-value" id="statFindings">0</span>
+          <span class="stat-label">Findings</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value" id="statHigh">0</span>
+          <span class="stat-label">High</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value" id="statMedium">0</span>
+          <span class="stat-label">Medium</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value" id="statLow">0</span>
+          <span class="stat-label">Low</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Settings Modal -->
+  <div class="modal" id="settingsModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Settings</h3>
+        <button class="close-btn" id="closeSettings">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="setting-group">
+          <label>Request Delay (ms)</label>
+          <input type="number" id="settingDelay" value="100" min="0" max="5000">
+        </div>
+        <div class="setting-group">
+          <label>Concurrent Requests</label>
+          <input type="number" id="settingConcurrent" value="5" min="1" max="20">
+        </div>
+        <div class="setting-group">
+          <label>Request Timeout (ms)</label>
+          <input type="number" id="settingTimeout" value="10000" min="1000" max="60000">
+        </div>
+        <div class="setting-group">
+          <label class="checkbox">
+            <input type="checkbox" id="settingFollowRedirects" checked>
+            <span>Follow Redirects</span>
+          </label>
+        </div>
+        <div class="setting-group">
+          <label class="checkbox">
+            <input type="checkbox" id="settingAutoFill" checked>
+            <span>Auto-fill current URL</span>
+          </label>
+        </div>
+        <div class="setting-group">
+          <label>Custom Headers (JSON)</label>
+          <textarea id="settingHeaders" rows="3" placeholder='{"X-Custom-Header": "value"}'></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="resetSettings">Reset</button>
+        <button class="btn btn-primary" id="saveSettings">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Export Modal -->
+  <div class="modal" id="exportModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Export Results</h3>
+        <button class="close-btn" id="closeExport">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="export-options">
+          <button class="export-btn" data-format="json">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+            </svg>
+            <span>JSON</span>
+          </button>
+          <button class="export-btn" data-format="csv">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="8" y1="13" x2="16" y2="13"></line>
+              <line x1="8" y1="17" x2="16" y2="17"></line>
+            </svg>
+            <span>CSV</span>
+          </button>
+          <button class="export-btn" data-format="markdown">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="9" y1="15" x2="15" y2="15"></line>
+            </svg>
+            <span>Markdown</span>
+          </button>
+          <button class="export-btn" data-format="html">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="16 18 22 12 16 6"></polyline>
+              <polyline points="8 6 2 12 8 18"></polyline>
+            </svg>
+            <span>HTML Report</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/popup.js" type="module"></script>
+</body>
+</html>
